@@ -1,0 +1,103 @@
+Week 1: Python + Programming Foundations (Agentic AI Prep)
+
+🎯 Goal of Week 1
+By the end of this week, you should be able to:
+
+Think logically in code
+
+Write clean Python scripts
+
+Understand how programs execute (critical for agents)
+
+Be comfortable enough to move into AI & LLM concepts
+
+⚠️ Agentic AI = 70% thinking + 30% tools
+Python is the language of thinking here
+
+📅 Daily Breakdown (7 Days)
+🟢 Day 1: Python Setup + Programming Mindset
+What you must do
+
+Install Python (3.10+)
+
+Install a code editor
+
+Run your first Python program
+
+Topics
+
+What is Python & why AI uses Python
+
+Python vs other languages
+
+Interpreter vs Compiler
+
+Writing & running .py files
+
+Tools to install
+
+Python
+
+Visual Studio Code
+
+Practice
+print("Hello Agentic AI")
+print(5 + 3)
+
+
+🎯 Outcome:
+You should feel comfortable running Python locally.
+
+🟢 Day 2: Variables, Data Types & Input
+Topics
+
+Variables
+
+Data Types:
+
+int
+
+float
+
+string
+
+boolean
+
+type()
+
+User input (input())
+
+Why this matters for Agents
+
+Agents constantly:
+
+Store memory
+
+Track state
+
+Pass variables between tools
+
+Example
+name = input("Enter your name: ")
+age = int(input("Enter your age: "))
+
+print(f"My name is {name} and I am {age} years old")
+
+
+🎯 Outcome:
+You understand how data flows inside a program.
+
+🟢 Day 3: Conditions (Decision Making)
+Topics
+
+if, elif, else
+
+Comparison operators
+
+Logical operators (and, or, not)
+
+Agent relevance
+
+Agents decide actions based on conditions — this is the backbone.
+
+Example
