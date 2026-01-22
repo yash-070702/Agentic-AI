@@ -15,7 +15,7 @@ def create_user(user: UserSchema, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return {"message": "User created successfully", "user": new_user}
 
-
+    
 @app.post("/posts/add")
 def create_post(post: PostSchema, db: Session = Depends(get_db)):
     new_post = Post(
