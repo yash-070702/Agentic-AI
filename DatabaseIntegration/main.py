@@ -35,6 +35,68 @@ def get_all_posts(db: Session = Depends(get_db)):
     return posts
 
 
+@app.get("/users")
+def get_all_users(db: Session = Depends(get_db)):
+    return db.query(User).all()
+
+@app.get("/users/{user_id}")
+def get_user_by_id(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+@app.get("/users/by-name")
+def get_user_by_username(username: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+@app.put("/users/update/{user_id}")
+def update_user(user_id: int, username: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    user.username = username
+    db.commit()
+    db.refresh(user)
+    return {"message": "User updated", "user": user}
+
+
+@app.patch("/users/{user_id}")
+def patch_user(user_id: int, user: UserSchema, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user.username:
+        db_user.username = user.username
+
+    db.commit()
+    db.refresh(db_user)
+    return {"message": "User partially updated", "user": db_user}
+
+@app.delete("/users/delete/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted"}
+
+@app.delete("/users/delete-all")
+def delete_all_users(db: Session = Depends(get_db)):
+    db.query(User).delete()
+    db.commit()
+    return {"message": "All users deleted"}
+
+
+
 @app.get("/posts/{post_id}")
 def get_post_by_id(post_id: int, db: Session = Depends(get_db)):
     post = db.query(Post).filter(Post.id == post_id).first()
