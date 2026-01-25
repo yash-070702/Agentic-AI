@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from config import get_db
 from AccountModel import Account
 from CustomerModel import Customer
+
 from accountSchema import AccountSchema
 import uvicorn
 
@@ -10,8 +11,8 @@ app = FastAPI(title="Account routes")
 
 # -------------------- CREATE ACCOUNT --------------------
 @app.post("/accounts")
-def new_acc(custId:int,db:Session=Depends(get_db)):
-    cust=db.query(Customer).filter(Customer.id==custId).first()
+def new_acc(custId:str,db:Session=Depends(get_db)):
+    cust=db.query(Customer).filter(Customer.cust_id==custId).first()
 
     if not cust:
         raise HTTPException(statrus_code=404,detail="Customer Not Found")

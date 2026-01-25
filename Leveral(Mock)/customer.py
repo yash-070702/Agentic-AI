@@ -35,33 +35,44 @@ def add_customer(
 @app.get("/customers")
 def fetch_cust(db: Session = Depends(get_db)):
     all_cust = db.query(Customer).all()
+    result=[]
+
+    for cust in all_cust:
+        acc=db.query(Account).filter(Account.cust_id==cust.cust_id).all()
+        result.append({"cust_name":cust.cust_name,
+                        "cust_id":cust.cust_id,
+                        "cust_acc":acc})
+
+        
 
     return {
         "message": "all customer fetch successfully",
-        "data": all_cust
+        "data": result
     }
 
 
 # -------------------- FETCH CUSTOMER BY ID --------------------
 @app.get("/customers/{custId}")
-def fetch_a_user(custId: int, db: Session = Depends(get_db)):
-    cust = db.query(Customer).filter(Customer.id == custId).first()
+def fetch_a_user(custId: str, db: Session = Depends(get_db)):
+    cust = db.query(Customer).filter(Customer.cust_id == custId).first()
 
     if not cust:
         raise HTTPException(
             status_code=404,
             detail="User Not Found"
         )
+    acc=db.query(Account).filter(Account.cust_id==cust.cust_id).all()
 
     return {
         "message": "User fetched successfully",
-        "user": cust
+        "user": {"data":cust,"accounts":acc}
+        
     }
 
 
 # -------------------- FETCH ACTIVE ACCOUNTS OF CUSTOMER --------------------
 @app.get("/customers/{custId}/accounts")
-def fetch_all_acc(custId: int, db: Session = Depends(get_db)):
+def fetch_all_acc(custId: str, db: Session = Depends(get_db)):
     accounts = db.query(Account).filter(
         Account.cust_id == custId,
         Account.acc_status == "active"
@@ -82,11 +93,11 @@ def fetch_all_acc(custId: int, db: Session = Depends(get_db)):
 # -------------------- UPDATE CUSTOMER --------------------
 @app.patch("/customers/{custId}")
 def update_customer(
-    custId: int,
+    custId: str,
     customer: CustomerSchema,
     db: Session = Depends(get_db)
 ):
-    update_cust = db.query(Customer).filter(Customer.id == custId).first()
+    update_cust = db.query(Customer).filter(Customer.cust_id == custId).first()
 
     if not update_cust:
         raise HTTPException(
