@@ -1,0 +1,19 @@
+customer_id,customer_name,email,city,account_id,account_type,balance,account_status,created_at,last_txn_amount
+C001,Yash Kumar,yash@gmail.com,Delhi,A1001,Savings,25000.50,active,2023-01-15,1200
+C001,Yash Kumar,yash@gmail.com,Delhi,A1002,Current,120000.00,active,2023-03-22,5000
+C002,Aman Verma,aman@gmail.com,Mumbai,A1003,Savings,1500.75,inactive,2022-11-10,
+C003,Neha Sharma,neha@gmail.com,Bangalore,A1004,Savings,89000.00,active,2023-05-01,2200
+C003,Neha Sharma,neha@gmail.com,Bangalore,A1005,FD,500000.00,active,2023-06-18,
+C004,Rahul Singh,rahul@gmail.com,Delhi,A1006,Savings,,active,2023-02-10,800
+C005,Priya Mehta,priya@gmail.com,Pune,A1007,Current,42000.25,inactive,,
+C006,Arjun Patel,arjun@gmail.com,Ahmedabad,A1008,Savings,7600.00,active,2023-07-21,300
+C006,Arjun Patel,arjun@gmail.com,Ahmedabad,A1009,Current,189000.00,active,2023-08-05,10000
+C007,Simran Kaur,simran@gmail.com,Chandigarh,A1010,Savings,950.00,inactive,2022-09-14,
+C008,Rohit Jain,rohit@gmail.com,Jaipur,A1011,FD,,active,2023-04-30,
+C009,Sneha Gupta,sneha@gmail.com,Noida,A1012,Savings,33000.75,active,,1500
+C010,Kunal Shah,kunal@gmail.com,Surat,A1013,Current,78000.00,active,2023-06-12,
+C011,Ankit Malhotra,,Delhi,A1014,Savings,5400.00,active,2023-01-05,400
+C012,Pooja Nair,pooja@gmail.com,Kochi,A1015,Savings,,inactive,2022-10-20,
+C013,Vikram Joshi,vikram@gmail.com,,A1016,Current,215000.00,active,2023-09-01,12000
+C014,Riya Arora,riya@gmail.com,Delhi,A1017,FD,300000.00,,2023-02-28,
+C015,Manish Gupta,manish@gmail.com,Lucknow,A1018,Savings,8600.00,active,,200
