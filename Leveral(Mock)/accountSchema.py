@@ -6,3 +6,11 @@ class AccountSchema(BaseModel):
     balance: Optional[float] = Field(None, gt=0, le=9999999)
     acc_status: Optional[Literal["active", "inactive"]] = None
 
+class AccountResponse(BaseModel):
+    id: int
+    cust_id: int
+    balance: float
+    acc_status: str
+
+    class Config:
+        from_attributes = True

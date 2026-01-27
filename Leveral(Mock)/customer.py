@@ -1,17 +1,17 @@
 from fastapi import FastAPI, HTTPException, Depends
 from sqlalchemy.orm import Session
 from config import get_db
-from CustomerModel import Customer
-from AccountModel import Account
-from customerSchema import CustomerSchema
-from accountSchema import  AccountSchema
+from Model import Customer , Account
+from typing import List
+from customerSchema import CustomerSchema , CustomerResponse
+from accountSchema import  AccountSchema , AccountResponse
 import uvicorn
 
 app = FastAPI(title="Customer routes")
 
 
 # -------------------- CREATE CUSTOMER --------------------
-@app.post("/customers")
+@app.post("/customers", response_model=CustomerResponse)
 def add_customer(
     customer: CustomerSchema,
     db: Session = Depends(get_db)
@@ -32,7 +32,7 @@ def add_customer(
 
 
 # -------------------- FETCH ALL CUSTOMERS --------------------
-@app.get("/customers")
+@app.get("/customers" , response_model=List[CustomerResponse])
 def fetch_cust(db: Session = Depends(get_db)):
     all_cust = db.query(Customer).all()
     result=[]
@@ -52,7 +52,7 @@ def fetch_cust(db: Session = Depends(get_db)):
 
 
 # -------------------- FETCH CUSTOMER BY ID --------------------
-@app.get("/customers/{custId}")
+@app.get("/customers/{custId}", response_model=CustomerResponse)
 def fetch_a_user(custId: str, db: Session = Depends(get_db)):
     cust = db.query(Customer).filter(Customer.cust_id == custId).first()
 
@@ -71,7 +71,7 @@ def fetch_a_user(custId: str, db: Session = Depends(get_db)):
 
 
 # -------------------- FETCH ACTIVE ACCOUNTS OF CUSTOMER --------------------
-@app.get("/customers/{custId}/accounts")
+@app.get("/customers/{custId}/accounts" , response_model=List[AccountResponse])
 def fetch_all_acc(custId: str, db: Session = Depends(get_db)):
     accounts = db.query(Account).filter(
         Account.cust_id == custId,
@@ -91,7 +91,7 @@ def fetch_all_acc(custId: str, db: Session = Depends(get_db)):
 
 
 # -------------------- UPDATE CUSTOMER --------------------
-@app.patch("/customers/{custId}")
+@app.patch("/customers/{custId}" , response_model=CustomerResponse)
 def update_customer(
     custId: str,
     customer: CustomerSchema,

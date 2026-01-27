@@ -7,3 +7,13 @@ class TransactionSchema(BaseModel):
     txn_amt: Optional[int]
     txn_date: Optional[date]
     acc_id: Optional[int]
+
+class TransactionResponse(BaseModel):
+    id: int
+    txn_type: str
+    txn_amt: int
+    txn_date: date
+    acc_id: int
+
+    class Config:
+        from_attributes = True

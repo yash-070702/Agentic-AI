@@ -9,3 +9,13 @@ class CustomerSchema(BaseModel):
     email: Optional[EmailStr] = None
     location: Optional[str] = None
 
+
+class CustomerResponse(BaseModel):
+    cust_id: str
+    cust_name: str
+    cust_type: str
+    email: EmailStr
+    location: str
+
+    class Config:
+        from_attributes = True

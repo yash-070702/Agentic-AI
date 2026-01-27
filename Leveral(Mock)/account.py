@@ -1,21 +1,20 @@
 from fastapi import FastAPI , HTTPException , Depends
 from sqlalchemy.orm import Session
 from config import get_db
-from AccountModel import Account
-from CustomerModel import Customer
-
-from accountSchema import AccountSchema
+from typing import List
+from Model import Customer , Account 
+from accountSchema import AccountSchema,AccountResponse
 import uvicorn
 
 app = FastAPI(title="Account routes")
 
 # -------------------- CREATE ACCOUNT --------------------
-@app.post("/accounts")
+@app.post("/accounts",response_model=AccountResponse)
 def new_acc(custId:str,db:Session=Depends(get_db)):
     cust=db.query(Customer).filter(Customer.cust_id==custId).first()
 
     if not cust:
-        raise HTTPException(statrus_code=404,detail="Customer Not Found")
+        raise HTTPException(status_code=404,detail="Customer Not Found")
 
     new_acc=Account(cust_id=custId)
     db.add(new_acc)
@@ -25,7 +24,7 @@ def new_acc(custId:str,db:Session=Depends(get_db)):
     return {"message":"Account created successfully","account":new_acc}
 
 # -------------------- FETCH ALL ACCOUNTS --------------------
-@app.get("/accounts")
+@app.get("/accounts", response_model=list[AccountResponse])
 def get_active_acc(db:Session=Depends(get_db)):
     all_acc=db.query(Account).filter(Account.acc_status=="active").all()
 
@@ -35,7 +34,7 @@ def get_active_acc(db:Session=Depends(get_db)):
     return {"message":"All active accounts fetched successfully","data":all_acc}
 
 # -------------------- FETCH ACCOUNT BY ID --------------------
-@app.get("/accounts/{accountId}")
+@app.get("/accounts/{accountId}", response_model=AccountResponse )
 def get_acc_by_id(accountId:int,db:Session=Depends(get_db)):
     acc=db.query(Account).filter(Account.id==accountId).first()
 
@@ -77,7 +76,7 @@ def get_acc_balance(accountId:int,db:Session=Depends(get_db)):
 
 
 # -------------------- UPDATE ACCOUNT BALANCE --------------------
-@app.patch("/accounts/{accountId}")
+@app.patch("/accounts/{accountId}",  response_model=AccountResponse)
 def update_acc_balance(accountId:int,account:AccountSchema,db:Session=Depends(get_db)):
     acc=db.query(Account).filter(Account.id==accountId).first()
     if not acc:
