@@ -5,6 +5,7 @@ from Model import Customer , Account
 from typing import List
 from customerSchema import CustomerSchema , CustomerResponse
 from accountSchema import  AccountSchema , AccountResponse
+from sqlalchemy.exc import IntegrityError
 import uvicorn
 
 app = FastAPI(title="Customer routes")
@@ -115,6 +116,20 @@ def update_customer(
         "message": "Customer updated successfully",
         "user": update_cust
     }
+
+# @app.post("/user")
+# def new_user(user:UserCreate,db:Session=Depends(get_db)):
+#     new_users=User(**user.__dict__)
+#     db.add(new_user)
+
+#     try:
+#         db.commit()
+#         db.refresh()
+#         return new_users
+   
+#     except IntegrityError as e:
+#         db.rollback()
+#         raise HTTPException(status_code=409,detail="user already exist")
 
 
 # -------------------- RUN SERVER --------------------
